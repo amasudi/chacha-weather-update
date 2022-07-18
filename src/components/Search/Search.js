@@ -1,8 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AsyncPaginate } from "react-select-async-paginate";
 import { GEO_API_URL, geoApiOptions } from "../../api";
 export const Search = ({ onSearchChange }) => {
   const [search, setSearch] = useState(null);
+  useEffect(() => {
+    if (search == null) {
+      const fetchData = async () => {
+        let response = await fetch("https://geolocation-db.com/json/");
+        let data = await response.json();
+        console.log(data);
+        setSearch(data.city + ", " + data.country_code);
+        handleOnChange({
+          value: `${data.latitude} ${data.longitude}`,
+          label: `${data.city}, ${data.country_code}`,
+        });
+      };
+      fetchData();
+    }
+  }, [search, setSearch]);
   const handleOnChange = (searchData) => {
     setSearch(searchData);
     onSearchChange(searchData);
