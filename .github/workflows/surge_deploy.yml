@@ -32,4 +32,4 @@ jobs:
       - name: Install Surge
         run: npm install -g surge
       - name: Run surge
-        run: surge ./build chacha-weather-update.surge.sh --token ${{ secrets.SURGE_TOKEN }}
+        run: surge ./build weather-update.surge.sh --token ${{ secrets.SURGE_TOKEN }}
